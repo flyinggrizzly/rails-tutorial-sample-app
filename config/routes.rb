@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
-  get   'static_pages/contact'
-  get   'static_pages/home'
-  get   'static_pages/help'
-  get   'static_pages/about'
-  root  'application#flying_grizzly'
+
+  root  'static_pages#home'
+  get   '/home',    to: redirect('/')
+
+  get   '/contact', to: 'static_pages#contact'
+  get   '/help',    to: 'static_pages#help'
+  get   '/about',   to: 'static_pages#about'
 end
