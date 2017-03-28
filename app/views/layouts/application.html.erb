@@ -4,7 +4,11 @@
     <title><%= full_title(yield(:title)) %></title>
     <%= csrf_meta_tags %>
 
+    <!-- these two are equivalent statements -->
+    <!-- one is definitely more readable than the other in the erb context, despite both being good style otherwise. -->
+    <!-- <%= stylesheet_link_tag('application', { :media => 'all', :'data-turbolinks-track' => 'reload' }) %> -->
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
