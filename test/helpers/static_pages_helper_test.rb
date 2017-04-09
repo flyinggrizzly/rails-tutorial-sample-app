@@ -12,5 +12,4 @@ class StaticPagesHelperTest < ActionView::TestCase
   test 'title string should produce combined title' do
     assert_equal(full_title('Hello'), "Hello | #{@base_title}")
   end
-
 end
