@@ -6,12 +6,18 @@ class StaticPagesControllerTest < ActionDispatch::IntegrationTest
     @base_title = 'Rails Tutorial Sample App'
   end
 
+  test 'root should get home' do
+    get root_url
+    assert_response :success
+    assert_select 'title', @base_title
+  end
+
   test 'home should redirect to root' do
     get static_pages_home_url
     assert_redirected_to '/'
   end
 
-  test "should get help" do
+  test 'should get help' do
     get static_pages_help_url
     assert_response :success
     assert_select 'title', 'Help | ' + @base_title
@@ -27,11 +33,5 @@ class StaticPagesControllerTest < ActionDispatch::IntegrationTest
     get static_pages_contact_url
     assert_response :success
     assert_select 'title', 'Contact | ' + @base_title
-  end
-
-  test 'root should get home' do
-    get root_url
-    assert_response :success
-    assert_select 'title', @base_title
   end
 end
