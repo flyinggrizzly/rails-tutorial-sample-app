@@ -1,11 +1,11 @@
 module ApplicationHelper
-  # provides page titles, defaulting to the base title if none is provided
-  def full_title(page_title = '')
+  def full_title(title = '')
     base_title = 'Rails Tutorial Sample App'
-    if page_title.empty?
-      base_title
+    if title.empty?
+      full_title = base_title
     else
-      "#{page_title} | #{base_title}"
+      full_title = title.capitalize + ' | ' + base_title
     end
+    full_title
   end
 end
