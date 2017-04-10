@@ -47,4 +47,17 @@ class UserTest < ActiveSupport::TestCase
       assert_not @user.valid?, "#{addy} should not be valid"
     end
   end
+
+  test 'email should be unique' do
+    dupe_user = @user.dup
+
+    # use new email so tests are not order dependent
+    EMAIL = 'mac@duff.org'.freeze
+    # make sure catch case differences
+    @user.email     = EMAIL.upcase
+    dupe_user.email = EMAIL.downcase
+
+    @user.save
+    assert_not dupe_user.valid?
+  end
 end
