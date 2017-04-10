@@ -2,6 +2,7 @@
 
 - Bootstrap import
 - Universal
+  - Variables
 - Typography
 - Header
 - Footer
@@ -31,6 +32,10 @@ textarea {
   }
 }
 
+/* universal/variables */
+$light-gray: #777;
+$medium-light-gray: #eaeaea;
+
 /* typography */
 h1, h2, h3, h4, h5, h6 {
   line-height: 1;
@@ -49,7 +54,7 @@ h2 {
   margin-bottom: 30px;
   text-align: center;
   font-weight: normal;
-  color: #777;
+  color: $light-gray;
 }
 
 p {
@@ -77,8 +82,8 @@ p {
 footer {
   margin-top: 45px;
   padding-top: 5px;
-  border-top: 1px solid #eaeaea;
-  color: #777;
+  border-top: 1px solid $medium-light-gray;
+  color: $light-gray;
   a {
     color: #555;
     &:hover {
