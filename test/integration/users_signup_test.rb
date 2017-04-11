@@ -46,4 +46,13 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
       assert_select '.error_message', User.new(hash).errors.full_messages.first, "empty #{key} should not be valid"
     end
   end
+
+  test 'valid signup data should be successful' do
+    assert_difference 'User.count', 1 do
+      get signup_path
+      post signup_path, params: { user: @user_hash }
+    end
+    follow_redirect!
+    assert_template 'users/show'
+  end
 end
