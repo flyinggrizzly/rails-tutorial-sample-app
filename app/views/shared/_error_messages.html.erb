@@ -6,7 +6,7 @@
 
     <ul>
       <% @user.errors.full_messages.each do |m| %>
-        <li><%= m %></li>
+        <li class='error_message'><%= m %></li>
       <% end %>
     </ul>
   </div><!-- end #error_explanation -->
