@@ -6,6 +6,7 @@
 - Typography
 - Header
 - Footer
+- Misc
 
 *****************/
 
@@ -35,6 +36,11 @@ textarea {
 /* universal/variables */
 $light-gray: #777;
 $medium-light-gray: #eaeaea;
+@mixin box_sizing {
+  -moz-box-sizing:    border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing:         border-box;
+}
 
 /* typography */
 h1, h2, h3, h4, h5, h6 {
@@ -101,4 +107,13 @@ footer {
       margin-left: 15px;
     }
   }
+}
+
+/* misc */
+.debug_dump {
+  clear: both;
+  float: left;
+  width: 100%;
+  margin-top: 45px;
+  @include box_sizing;
 }
