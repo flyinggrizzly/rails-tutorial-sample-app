@@ -82,4 +82,16 @@ class UserTest < ActiveSupport::TestCase
     @user.password_confirmation = 'a' * 11
     assert_not @user.valid?
   end
+
+  test 'remember should set token' do
+    @user.save
+    old_rem_digest = @user.remember_digest
+    @user.remember
+    assert_not @user.remember_digest == old_rem_digest
+  end
+
+  test 'should determine authentication status' do
+    @user.remember
+    assert @user.authenticated?(@user.remember_token)
+  end
 end
