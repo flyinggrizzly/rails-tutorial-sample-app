@@ -9,8 +9,9 @@ class User < ApplicationRecord
                     length:     { maximum: 255 },
                     format:     { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
-  validates :password, length:   { minimum: 12 },
-                       presence: true
+  validates :password, length:    { minimum: 12 },
+                       presence:  true,
+                       allow_nil: true # allow username and email to change without updating password, but `has_secure_password` will still ensure people can't signup with nil password at the first step
 
   # Sets up token for remembering a user's session
   def remember
