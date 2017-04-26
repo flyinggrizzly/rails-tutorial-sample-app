@@ -50,6 +50,7 @@ class UsersController < ApplicationController
     end
   end
 
+  # Redirects users trying to access someone else's edit and update actions
   def correct_user
     @user = User.find(params[:id])
     redirect_to(root_url) unless current_user?(@user)
