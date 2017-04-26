@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :logged_in_user, only: [:edit, :update]
 
   def show
     @user = User.find(params[:id])
@@ -34,7 +35,17 @@ class UsersController < ApplicationController
   end
 
   private
+
+  # Strengthen parameters being passed to prevent shenanigans
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
+  end
+
+  # Redirects anonymous users to sign in before accessing privileged pages
+  def logged_in_user
+    unless logged_in?
+      flash[:danger] = 'Please log in.'
+      redirect_to login_url
+    end
   end
 end
