@@ -9,3 +9,13 @@ gogo:
   name: Estragon
   email: gogo@waiting.godot
   password_digest: <%= User.digest('passwordpassword') %>
+
+lucky:
+  name: Lucky
+  email: onaleash@waiting.godot
+  password_digest: <%= User.digest('passwordpassword') %>
+
+pozzo:
+  name: Pozzo
+  email: holdingaleash@waiting.godot
+  password_digest: <%= User.digest('passwordpassword') %>
