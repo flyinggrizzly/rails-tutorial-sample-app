@@ -19,3 +19,40 @@ pozzo:
   name: Pozzo
   email: holdingaleash@waiting.godot
   password_digest: <%= User.digest('passwordpassword') %>
+
+archer:
+  name: Sterling Archer
+  email: duchess@figgis.agency
+  password_digest: <%= User.digest('passwordpassword') %>
+
+lana:
+  name: Lana Kane
+  email: hands@figgis.agency
+  password_digest: <%= User.digest('passwordpassword') %>
+
+malory:
+  name: Malory Archer
+  email: mother@figgis.agency
+  password_digest: <%= User.digest('passwordpassword') %>
+
+cyril:
+  name: Cyril Figgis
+  email: comptroller@figgis.agency
+  password_digest: <%= User.digest('passwordpassword') %>
+
+cheryl:
+  name: Carol 'Cristall' Tunt
+  email: cherlene@figgis.agency
+  password_digest: <%= User.digest('passwordpassword') %>
+
+pam:
+  name: Pam Poovey
+  email: shit-snacks@figgis.agency
+  password_digest: <%= User.digest('passwordpassword') %>
+
+<% 30.times do |n| %>
+user_<%= n %>:
+  name: <%= "User #{n}" %>
+  email: <%= "user-#{n}@example.org" %>
+  password_digest: <%= User.digest('passwordpassword') %>
+<% end %>
