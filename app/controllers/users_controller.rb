@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: [:index, :edit, :update]
+  before_action :logged_in_user, only: [:index, :edit, :update,
+                                        :delete, :destroy]
   before_action :correct_user,   only: [:edit, :update]
+  before_action :admin_user, only: [:delete, :destroy]
 
   def index
     @users = User.paginate(page: params[:page])
@@ -26,7 +28,7 @@ class UsersController < ApplicationController
   end
 
   def edit
-    # Don't need to look up the user to edit; it's handled by before_action :correct_user
+    # No need to look up user; it's handled by before_action :correct_user
   end
 
   def update
@@ -37,6 +39,19 @@ class UsersController < ApplicationController
     else
       render 'edit'
     end
+  end
+
+  # Non-RESTtful resource. Provides a non-JS fall-back for the destroy action.
+  # For source and details see RailsCast 77 revised:
+  # http://railscasts.com/episodes/77-destroy-without-javascript-revised?autoplay=true
+  def delete
+    @user = User.find(params[:id])
+  end
+
+  def destroy
+    User.find(params[:id]).destroy
+    flash[:success] = 'User deleted'
+    redirect_to users_url
   end
 
   private
@@ -59,5 +74,9 @@ class UsersController < ApplicationController
   def correct_user
     @user = User.find(params[:id])
     redirect_to(root_url) unless current_user?(@user)
+  end
+
+  def admin_user
+    redirect_to(root_url) unless current_user.admin?
   end
 end
