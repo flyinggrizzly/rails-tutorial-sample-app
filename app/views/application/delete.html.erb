@@ -1,5 +1,5 @@
 <%= form_tag request.url, html: {method: :delete} do %>
-  <h2>Are you sure you want to delete this record?</h2>
+  <h2>Are you sure you want to delete <%= @user.name %>?</h2>
   <p>
     <%= submit_tag "Destroy" %>
     <% if request.referrer.present? %>
