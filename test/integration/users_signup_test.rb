@@ -53,11 +53,5 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
       post signup_path, params: { user: @user_hash }
     end
     follow_redirect!
-    assert_template 'users/show'
-    assert_not flash.empty? # Make sure the welcome flash shows for new signups
-
-    # make sure that the user is logged in for this redirect
-    assert_select 'a[href=?]', login_path, count: 0
-    assert is_logged_in?
   end
 end
