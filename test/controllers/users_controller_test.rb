@@ -4,6 +4,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   def setup
     @user       = users(:gogo)
     @other_user = users(:pozzo)
+    @admin      = users(:godot)
   end
 
   test 'should get new' do
@@ -51,5 +52,27 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
                                               email: 'destroyer@worl.ds',
                                               admin: true } }
     assert_not @user.reload.admin?
+  end
+
+  test 'should redirect destroy when not logged in' do
+    assert_no_difference 'User.count' do
+      delete user_path(@user)
+    end
+    assert_redirected_to login_url
+  end
+
+  test 'should redirect destroy when logged in as non-admin' do
+    log_in_as(@user)
+    assert_no_difference 'User.count' do
+      delete user_path(@other_user)
+    end
+    assert_redirected_to root_url
+  end
+
+  test 'admins can delete users' do
+    log_in_as(@admin)
+    assert_difference 'User.count', -1 do
+      delete user_path(@user)
+    end
   end
 end

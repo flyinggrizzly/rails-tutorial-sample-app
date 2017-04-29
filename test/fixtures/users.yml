@@ -1,5 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
+godot:
+  name: Godot
+  email: othersare@waiting.godot
+  password_digest: <%= User.digest('passwordpassword') %>
+  admin: true
+
 didi:
   name: Vladimir
   email: didi@waiting.godot
