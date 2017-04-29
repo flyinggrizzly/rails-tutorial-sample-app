@@ -5,60 +5,84 @@ godot:
   email: othersare@waiting.godot
   password_digest: <%= User.digest('passwordpassword') %>
   admin: true
+  activated: true
+  activated_at: <%= Time.zone.now %>
 
 didi:
   name: Vladimir
   email: didi@waiting.godot
   password_digest: <%= User.digest('passwordpassword') %>
+  activated: true
+  activated_at: <%= Time.zone.now %>
 
 gogo:
   name: Estragon
   email: gogo@waiting.godot
   password_digest: <%= User.digest('passwordpassword') %>
+  activated: true
+  activated_at: <%= Time.zone.now %>
 
 lucky:
   name: Lucky
   email: onaleash@waiting.godot
   password_digest: <%= User.digest('passwordpassword') %>
+  activated: true
+  activated_at: <%= Time.zone.now %>
 
 pozzo:
   name: Pozzo
   email: holdingaleash@waiting.godot
   password_digest: <%= User.digest('passwordpassword') %>
+  activated: true
+  activated_at: <%= Time.zone.now %>
 
 archer:
   name: Sterling Archer
   email: duchess@figgis.agency
   password_digest: <%= User.digest('passwordpassword') %>
+  activated: true
+  activated_at: <%= Time.zone.now %>
 
 lana:
   name: Lana Kane
   email: hands@figgis.agency
   password_digest: <%= User.digest('passwordpassword') %>
+  activated: true
+  activated_at: <%= Time.zone.now %>
 
 malory:
   name: Malory Archer
   email: mother@figgis.agency
   password_digest: <%= User.digest('passwordpassword') %>
+  activated: true
+  activated_at: <%= Time.zone.now %>
 
 cyril:
   name: Cyril Figgis
   email: comptroller@figgis.agency
   password_digest: <%= User.digest('passwordpassword') %>
+  activated: true
+  activated_at: <%= Time.zone.now %>
 
 cheryl:
   name: Carol 'Cristall' Tunt
   email: cherlene@figgis.agency
   password_digest: <%= User.digest('passwordpassword') %>
+  activated: true
+  activated_at: <%= Time.zone.now %>
 
 pam:
   name: Pam Poovey
   email: shit-snacks@figgis.agency
   password_digest: <%= User.digest('passwordpassword') %>
+  activated: true
+  activated_at: <%= Time.zone.now %>
 
 <% 30.times do |n| %>
 user_<%= n %>:
   name: <%= "User #{n}" %>
   email: <%= "user-#{n}@example.org" %>
   password_digest: <%= User.digest('passwordpassword') %>
+  activated: true
+  activated_at: <%= Time.zone.now %>
 <% end %>
