@@ -34,6 +34,16 @@ class User < ApplicationRecord
     BCrypt::Password.new(digest).is_password?(token)
   end
 
+  # Activates an account
+  def activate
+    update_columns(activated: true, activated_at: Time.zone.now)
+  end
+
+  # Sends activation email
+  def send_activation_email
+    UserMailer.account_activation(self).deliver_now
+  end
+
   # Downcases the users email
   def downcase_email
     email.downcase!
