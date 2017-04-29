@@ -1,0 +1,4 @@
+<%= form_for @user, html: {method: :delete} do |f| %>
+  <h2>Are you sure you want to delete <%= @user.name %>?</h2>
+  <p><%= f.submit "Destroy" %> or <%= link_to "cancel", users_path %></p>
+<% end %>
