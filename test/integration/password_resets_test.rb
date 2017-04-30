@@ -92,4 +92,18 @@ class PasswordResetsTest < ActionDispatch::IntegrationTest
     follow_redirect!
     assert_match /expired/i, response.body
   end
+
+  test 'reset token can be used only once' do
+    get new_password_reset_path
+    post password_resets_path, params: { password_reset: { email: @user.email   } }
+    @user = assigns(:user)
+    patch password_reset_path(@user.reset_token),
+                              params: {
+                                email: @user.email,
+                                user: {
+                                  password:              'foobarfoobar',
+                                  password_confirmation: 'foobarfoobar' } }
+    @user.reload
+    assert_not @user.reset_digest
+  end
 end

@@ -27,7 +27,7 @@ class PasswordResetsController < ApplicationController
       render 'edit'
     elsif @user.update_attributes(user_params)
       # Change the reset digest so the link can be used only once
-      @user.update_attribute(:reset_digest, User.digest(User.new_token))
+      @user.update_attribute(:reset_digest, nil)
 
       log_in @user
       flash[:success] = 'Password has been reset.'
