@@ -4,7 +4,7 @@ class PasswordResetsTest < ActionDispatch::IntegrationTest
 
   def setup
     ActionMailer::Base.deliveries.clear
-    @hello_user = users(:didi)
+    @user = users(:didi)
   end
 
   test 'password reset link requests' do
@@ -18,8 +18,8 @@ class PasswordResetsTest < ActionDispatch::IntegrationTest
     assert_equal 0, ActionMailer::Base.deliveries.size
 
     # Valid email
-    post password_resets_path, params: { password_reset: { email: @hello_user.email } }
-    assert_not_equal @hello_user.reset_digest, @hello_user.reload.reset_digest
+    post password_resets_path, params: { password_reset: { email: @user.email   } }
+    assert_not_equal @user.reset_digest, @user.reload.reset_digest
     assert_equal 1, ActionMailer::Base.deliveries.size
     assert_not flash.empty?
     assert_redirected_to root_url
@@ -27,7 +27,7 @@ class PasswordResetsTest < ActionDispatch::IntegrationTest
 
   test 'resetting passwords' do
     get new_password_reset_path
-    post password_resets_path, params: { password_reset: { email: @hello_user.email } }
+    post password_resets_path, params: { password_reset: { email: @user.email   } }
     user = assigns(:user)
 
     # Wrong email
@@ -75,5 +75,24 @@ class PasswordResetsTest < ActionDispatch::IntegrationTest
     assert is_logged_in?
     assert_not flash.empty?
     assert_redirected_to user
+  end
+
+  test 'expired token' do
+    get new_password_reset_path
+    post password_reset_path, params: { password_reset: { email: @user.email } }
+
+    @user = assigns(:user)
+    @user.update_attribute(:reset_sent_at, 3.hours.ago)
+
+    patch password_reset_path(@user.reset_token),
+                              params: {
+                                email: @user.email,
+                                user: {
+                                  password:              'foobarfoobar',
+                                  password_confirmation: 'foobarfoobar'
+                                } }
+    assert_response :redirect
+    follow_redirect!
+    assert_match (/expired/i), response.body
   end
 end
