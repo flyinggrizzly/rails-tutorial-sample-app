@@ -8,4 +8,8 @@ module ApplicationHelper
     end
     full_title
   end
+
+  def page_title(title = 'Sample App')
+    title
+  end
 end
