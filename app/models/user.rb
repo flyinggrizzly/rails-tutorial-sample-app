@@ -4,6 +4,8 @@ class User < ApplicationRecord
   before_save :downcase_email
   before_create :create_activation_digest
 
+  has_many :microposts
+
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
   validates :name,  presence: true, length: { maximum: 50 }
   validates :email, presence:   true,
@@ -64,7 +66,7 @@ class User < ApplicationRecord
   def password_reset_expired?
     reset_sent_at < 2.hours.ago
   end
-  
+
   # Class Methods
   class << self
     # Returns hash digest of the given string
