@@ -26,4 +26,8 @@ class MicropostTest < ActiveSupport::TestCase
     @micropost.content = 'a' * 141
     assert_not @micropost.valid?
   end
+
+  test 'should be reverse date ordered' do
+    assert_equal microposts(:most_recent), Micropost.first
+  end
 end
