@@ -63,15 +63,6 @@ class UsersController < ApplicationController
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
   end
 
-  # Redirects anonymous users to sign in before accessing privileged pages
-  def logged_in_user
-    unless logged_in?
-      store_destination
-      flash[:danger] = 'Please log in.'
-      redirect_to login_url
-    end
-  end
-
   # Redirects users trying to access someone else's edit and update actions
   def correct_user
     @user = User.find(params[:id])
