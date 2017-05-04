@@ -11,11 +11,11 @@
   </aside>
   <div class="col-md-8">
     <% if @user.microposts.any? %>
-      <h3>Microposts <%= @user.microposts.count %></h3>
+      <h3>Microposts (<%= @user.microposts.count %>)</h3>
       <ol class="microposts">
         <%= render @microposts %>
       </ol>
-      <% will_paginate @microposts %>
+      <%= will_paginate @microposts %>
     <% end %>
   </div><!-- end .col-md-8 -->
 </div>

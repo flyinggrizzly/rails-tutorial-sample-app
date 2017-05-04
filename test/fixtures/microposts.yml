@@ -3,19 +3,26 @@
 lana:
   content: "LANAAAAAAAAA"
   created_at: <%= 10.minutes.ago %>
+  user: archer
 
 danger_zone:
   content: "Kenny Loggins called."
-  created_at: <%= 2.hours.ago %>
+  created_at: <%= 2.years.ago %>
+  user: archer
 
 johnny_benchcombe:
   content: "OK (your own fingers)."
-  created_at: <%= 5.seconds.ago %>
-
-just_the_tip:
-  content: "You know I'm allergic to dairy!"
-  created_at: <%= 2.days.ago %>
+  created_at: <%= 2.hours.ago %>
+  user: archer
 
 most_recent:
-  content: "You are *so* five minutes ago."
+  content: "Just the tip?"
   created_at: <%= Time.zone.now %>
+  user: archer
+
+<% 30.times do |n| %>
+micropost_<%= n %>:
+  content: <%= Faker::Lorem.sentence(5) %>
+  created_at: <%= 42.days.ago %>
+  user: archer
+<% end %>
