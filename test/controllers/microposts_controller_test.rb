@@ -18,4 +18,13 @@ class MicropostsControllerTest < ActionDispatch::IntegrationTest
     end
     assert_redirected_to login_url
   end
+
+  test 'users should only be able to delete their own posts' do
+    log_in_as users(:lana)
+    micropost = microposts(:ants)
+    assert_no_difference 'Micropost.count' do
+      delete micropost_path(micropost)
+    end
+    assert_redirected_to root_url
+  end
 end

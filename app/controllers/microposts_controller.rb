@@ -1,5 +1,6 @@
 class MicropostsController < ApplicationController
   before_action :logged_in_user, only: [:create, :destroy]
+  before_action :correct_user,   only: [:destroy]
 
   def create
     @micropost = current_user.microposts.build(micropost_params)
@@ -22,7 +23,15 @@ class MicropostsController < ApplicationController
   def destroy
     Micropost.find(params[:id]).destroy
     flash[:success] = 'Micropost deleted'
-    redirect_to root_url
+
+    # If the referring URL has just been deleted, don't go there
+    if request.referer
+      if request.referer.include? params[:id]
+        redirect_to root_url
+      end
+    else # otherwise go back there if we can
+        redirect_to request.referer || root_url
+    end
   end
 
   private
