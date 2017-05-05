@@ -12,10 +12,17 @@ class MicropostsController < ApplicationController
     end
   end
 
+  # Non-RESTtful resource. Provides a non-JS fall-back for the destroy action.
+  # For source and details see RailsCast 77 revised:
+  # http://railscasts.com/episodes/77-destroy-without-javascript-revised?autoplay=true
+  def delete
+    @micropost = Micropost.find(params[:id])
+  end
+
   def destroy
-    @micropost.destroy
+    Micropost.find(params[:id]).destroy
     flash[:success] = 'Micropost deleted'
-    redirect_to request.referrer || root_url
+    redirect_to root_url
   end
 
   private
