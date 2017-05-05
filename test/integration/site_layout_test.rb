@@ -14,7 +14,7 @@ class SiteLayoutTest < ActionDispatch::IntegrationTest
   end
 
   test 'logged in layout links' do
-    user = users(:didi)
+    user = users(:godot)
     log_in_as user
     get root_path
     assert_template 'static_pages/home'
