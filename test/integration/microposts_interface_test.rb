@@ -2,7 +2,8 @@ require 'test_helper'
 
 class MicropostsInterfaceTest < ActionDispatch::IntegrationTest
   def setup
-    @user = users(:archer)
+    @user  = users(:archer)
+    @admin = users(:godot)
   end
 
   test 'creating microposts' do
@@ -59,12 +60,25 @@ class MicropostsInterfaceTest < ActionDispatch::IntegrationTest
     log_in_as(@user)
     get user_path(users(:lana))
     assert_select 'a', text: 'delete', count: 0
+
+    # Check are redirected from delete page
+    lana_post = users(:lana).microposts.paginate(page: 1).first
+    get delete_micropost_path(lana_post)
+    assert_response :redirect
+  end
+
+  test 'admins should be able to delete posts' do
+    log_in_as(@admin)
+    first_micropost = @user.microposts.paginate(page: 1).first
+    assert_difference 'Micropost.count', -1 do
+      delete micropost_path(first_micropost)
+    end
   end
 
   test 'micropost sidebar count' do
     log_in_as(@user)
     get root_path
-    assert_match "#{@user.microposts.count}", response.body
+    assert_match "#{@user.microposts.count} microposts", response.body
 
     # User with zero microposts
     other_user = users(:cyril)
