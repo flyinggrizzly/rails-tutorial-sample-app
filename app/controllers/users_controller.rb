@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :logged_in_user,        only: [:index, :edit, :update, :delete,
-                                               :destroy]
+                                               :destroy, :following, :followers]
   before_action :correct_or_admin_user, only: [:edit, :update]
   before_action :admin_user,            only: [:delete, :destroy]
 
@@ -54,6 +54,22 @@ class UsersController < ApplicationController
     User.find(params[:id]).destroy
     flash[:success] = 'User deleted'
     redirect_to users_url
+  end
+
+  # Renders a page showing users followed by a given user
+  def following
+    @title = 'Following'
+    @user = User.find(params[:id])
+    @users = @user.following.paginate(page: params[:page])
+    render 'show_follow'
+  end
+
+  # Renders a page of followers of a given user
+  def followers
+    @title = 'Followers'
+    @user = User.find(params[:id])
+    @users = @user.followers.paginate(page: params[:page])
+    render 'show_follow'
   end
 
   private

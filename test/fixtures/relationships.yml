@@ -1,0 +1,15 @@
+one:
+  follower: didi
+  followed: gogo
+
+two:
+  follower: gogo
+  followed: didi
+
+three:
+  follower: gogo
+  followed: godot
+
+four:
+  follower: didi
+  followed: godot
