@@ -3,13 +3,6 @@ class User < ApplicationRecord
   has_secure_password
   before_save :downcase_email
   before_create :create_activation_digest
-
-  has_many :microposts,           dependent: :destroy
-  has_many :active_relationships, class_name:  'Relationship',
-                                  foreign_key: 'follower_id',
-                                  dependent:   :destroy
-  has_many :following, through: :active_relationships, source: :followed
-
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
   validates :name,  presence: true, length: { maximum: 50 }
   validates :email, presence:   true,
@@ -19,6 +12,18 @@ class User < ApplicationRecord
   validates :password, length:    { minimum: 12 },
                        presence:  true,
                        allow_nil: true # allow username and email to change without updating password, but `has_secure_password` will still ensure people can't signup with nil password at the first step
+
+  has_many :microposts,            dependent: :destroy
+  has_many :active_relationships,  class_name:  'Relationship',
+                                   foreign_key: 'follower_id',
+                                   dependent:   :destroy
+  has_many :passive_relationships, class_name:  'Relationship',
+                                   foreign_key: 'followed_id',
+                                   dependent:   :destroy
+  has_many :following,             through: :active_relationships,
+                                   source: :followed
+  has_many :followers,             through: :passive_relationships,
+                                   source: :follower
 
   # Sets up token for remembering a user's session
   def remember
@@ -104,6 +109,7 @@ class User < ApplicationRecord
   def following?(other_user)
     following.include?(other_user)
   end
+
 
   private
 

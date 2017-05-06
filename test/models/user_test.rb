@@ -105,14 +105,19 @@ class UserTest < ActiveSupport::TestCase
   test 'should follow and unfollow a user' do
     archer = users(:archer)
     lana   = users(:lana)
+
     assert_not archer.following?(lana)
+
     assert_difference 'archer.following.size', 1 do
       archer.follow(lana)
     end
     assert archer.following?(lana)
+    assert lana.followers.include?(archer)
+
     assert_difference 'archer.following.size', -1 do
       archer.unfollow(lana)
     end
     assert_not archer.following?(lana)
+    assert_not lana.followers.include?(archer)
   end
 end
