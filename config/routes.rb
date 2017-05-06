@@ -10,7 +10,12 @@ Rails.application.routes.draw do
   # user creation and display, account activations
   get  '/signup',  to: 'users#new'
   post '/signup',  to: 'users#create'
-  resources :users
+  resources :users do
+    member do
+      get :following, :followers
+    end
+  end
+  resources :relationships,       only: [:create, :destroy]
   resources :account_activations, only: [:edit]
 
   # login/logout, password resets
