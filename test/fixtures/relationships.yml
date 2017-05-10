@@ -13,3 +13,15 @@ three:
 four:
   follower: didi
   followed: godot
+
+five:
+  follower: lana
+  followed: archer
+
+six:
+  follower: archer
+  followed: lana
+
+seven:
+  follower: cyril
+  followed: archer

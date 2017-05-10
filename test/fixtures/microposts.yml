@@ -45,7 +45,12 @@ van:
   created_at: <%= 4.hours.ago %>
   user: lana
 
-<% 30.times do |n| %>
+stirfriday:
+  content: "Wow... yea, 'stir-Friday' is so much better than what I had"
+  created_at: <%= 8.minutes.ago %>
+  user: cyril
+
+<% 300.times do |n| %>
 micropost_<%= n %>:
   content: <%= Faker::Lorem.sentence(5) %>
   created_at: <%= 42.days.ago %>
