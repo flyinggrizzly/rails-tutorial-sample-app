@@ -78,21 +78,10 @@ class User < ApplicationRecord
 
   # Defines a proto-feed
   def feed
-    Micropost.where('user_id IN (?) OR user_id = ?', following_ids, id)
-  end
-
-  # Class Methods
-  class << self
-    # Returns hash digest of the given string
-    def digest(string)
-      cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
-      BCrypt::Password.create(string, cost: cost)
-    end
-
-    # Returns a random token
-    def new_token
-      SecureRandom.urlsafe_base64
-    end
+    following_ids = "SELECT followed_id FROM relationships
+                      WHERE follower_id = :user_id"
+    Micropost.where("user_id IN (#{following_ids}) OR user_id = :user_id",
+                    following_ids: following_ids, user_id: id)
   end
 
   # Follows a user
@@ -110,6 +99,19 @@ class User < ApplicationRecord
     following.include?(other_user)
   end
 
+  # Class Methods
+  class << self
+    # Returns hash digest of the given string
+    def digest(string)
+      cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
+      BCrypt::Password.create(string, cost: cost)
+    end
+
+    # Returns a random token
+    def new_token
+      SecureRandom.urlsafe_base64
+    end
+  end
 
   private
 
